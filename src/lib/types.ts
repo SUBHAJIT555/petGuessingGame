@@ -30,3 +30,4 @@ export const CORRECT_CARDS = 20;
 export const DECOY_CARDS = 5;
 export const GRID_SIZE = 25;
 export const MAX_SCORE = 100;
+export const MAX_LIVES = 3;

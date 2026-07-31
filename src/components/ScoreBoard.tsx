@@ -8,6 +8,8 @@ type ScoreBoardProps = {
   category: AnimalCategory;
   score: number;
   correctPicks: number;
+  lives: number;
+  maxLives?: number;
   totalCorrect?: number;
 };
 
@@ -15,6 +17,8 @@ export function ScoreBoard({
   category,
   score,
   correctPicks,
+  lives,
+  maxLives = 3,
   totalCorrect = 20,
 }: ScoreBoardProps) {
   const meta = CATEGORY_META[category];
@@ -37,6 +41,32 @@ export function ScoreBoard({
           <p className="font-display text-xl font-bold tracking-tight">
             {meta.shortLabel}
           </p>
+        </div>
+      </div>
+
+      <div className="text-center">
+        <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-cream/55">
+          Lives
+        </p>
+        <div className="flex items-center justify-center gap-1.5" aria-label={`${lives} of ${maxLives} lives`}>
+          {Array.from({ length: maxLives }, (_, i) => {
+            const filled = i < lives;
+            return (
+              <motion.span
+                key={`${lives}-${i}`}
+                initial={filled ? { scale: 1 } : { scale: 0.6, opacity: 0.4 }}
+                animate={{
+                  scale: filled ? 1 : 0.85,
+                  opacity: filled ? 1 : 0.28,
+                }}
+                transition={{ type: "spring", stiffness: 420, damping: 22 }}
+                className={`text-2xl leading-none ${filled ? "text-danger" : "text-cream"}`}
+                aria-hidden
+              >
+                {filled ? "♥" : "♡"}
+              </motion.span>
+            );
+          })}
         </div>
       </div>
 

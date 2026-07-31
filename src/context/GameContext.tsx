@@ -11,6 +11,7 @@ import {
 import { buildGameGrid, calcScore } from "@/lib/game";
 import {
   CORRECT_CARDS,
+  MAX_LIVES,
   type AnimalCategory,
   type GameResult,
   type GameStatus,
@@ -34,6 +35,8 @@ type GameContextValue = {
   cards: GridCard[];
   score: number;
   correctPicks: number;
+  lives: number;
+  maxLives: number;
   status: GameStatus;
   result: GameResult | null;
   selectCategory: (category: AnimalCategory) => void;
@@ -49,6 +52,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [cards, setCards] = useState<GridCard[]>([]);
   const [score, setScore] = useState(0);
   const [correctPicks, setCorrectPicks] = useState(0);
+  const [lives, setLives] = useState(MAX_LIVES);
   const [status, setStatus] = useState<GameStatus>("idle");
   const [result, setResult] = useState<GameResult | null>(null);
 
@@ -57,6 +61,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setCards(buildGameGrid(next));
     setScore(0);
     setCorrectPicks(0);
+    setLives(MAX_LIVES);
     setStatus("playing");
     setResult(null);
   }, []);
@@ -69,17 +74,22 @@ export function GameProvider({ children }: { children: ReactNode }) {
       if (!target || target.revealed) return;
 
       if (!target.isCorrect) {
+        const nextLives = lives - 1;
         setCards((prev) =>
           prev.map((c) => (c.id === cardId ? { ...c, revealed: true } : c)),
         );
-        setStatus("gameover");
-        setResult({
-          category,
-          correctPicks,
-          score,
-          status: "gameover",
-          totalCorrectPossible: CORRECT_CARDS,
-        });
+        setLives(nextLives);
+
+        if (nextLives <= 0) {
+          setStatus("gameover");
+          setResult({
+            category,
+            correctPicks,
+            score,
+            status: "gameover",
+            totalCorrectPossible: CORRECT_CARDS,
+          });
+        }
         return;
       }
 
@@ -126,7 +136,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setCorrectPicks(nextPicks);
       setScore(nextScore);
     },
-    [cards, category, correctPicks, score, status],
+    [cards, category, correctPicks, lives, score, status],
   );
 
   const resetGame = useCallback(() => {
@@ -134,6 +144,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setCards([]);
     setScore(0);
     setCorrectPicks(0);
+    setLives(MAX_LIVES);
     setStatus("idle");
     setResult(null);
   }, []);
@@ -149,6 +160,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       cards,
       score,
       correctPicks,
+      lives,
+      maxLives: MAX_LIVES,
       status,
       result,
       selectCategory,
@@ -161,6 +174,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       cards,
       score,
       correctPicks,
+      lives,
       status,
       result,
       selectCategory,

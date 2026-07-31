@@ -11,7 +11,8 @@ import { useGame } from "@/context/GameContext";
 
 export default function GamePage() {
   const router = useRouter();
-  const { category, cards, score, correctPicks, status, revealCard } = useGame();
+  const { category, cards, score, correctPicks, lives, maxLives, status, revealCard } =
+    useGame();
 
   useEffect(() => {
     if (!category) router.replace("/category");
@@ -35,6 +36,8 @@ export default function GamePage() {
         category={category}
         score={score}
         correctPicks={correctPicks}
+        lives={lives}
+        maxLives={maxLives}
       />
 
       <AnimatePresence>
@@ -75,7 +78,7 @@ export default function GamePage() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        Tap to reveal · One wrong animal ends the game
+        Tap to reveal · 3 lives · Wrong animals cost a life
       </motion.p>
     </ScreenShell>
   );

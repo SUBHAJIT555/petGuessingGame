@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - Pick a category → 20 matching + 5 decoy cards
 - Correct pick = **+4** points
-- Wrong pick = **Game Over**
+- Wrong pick = lose 1 life (**3 lives** → Game Over at 0)
 - All 20 correct → Perfect **100/100** (decoys transform)
 - Photo Zone is a pose screen for a live event photographer
 
