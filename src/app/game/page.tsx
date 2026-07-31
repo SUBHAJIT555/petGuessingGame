@@ -29,7 +29,7 @@ export default function GamePage() {
   const locked = status !== "playing";
 
   return (
-    <ScreenShell className="!pt-4">
+    <ScreenShell className="pt-4!">
       <ConfettiOverlay active={status === "perfect"} />
       <ScoreBoard
         category={category}

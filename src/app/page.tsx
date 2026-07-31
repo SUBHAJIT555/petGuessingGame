@@ -9,7 +9,7 @@ export default function WelcomePage() {
   const router = useRouter();
 
   return (
-    <ScreenShell ambient={false} className="home-screen !px-0 !py-0">
+    <ScreenShell ambient={false} className="home-screen px-0! py-0!">
       {/* Full-bleed atmospheric plane */}
       <div className="home-bg pointer-events-none absolute inset-0" aria-hidden>
         <div className="home-bg-wash" />
@@ -17,7 +17,7 @@ export default function WelcomePage() {
         <div className="home-bg-vignette" />
       </div>
 
-      <div className="relative z-[1] flex h-full flex-col px-[clamp(1.5rem,4vw,2.5rem)] py-[clamp(1.75rem,4vh,2.75rem)]">
+      <div className="relative z-1 flex h-full flex-col px-[clamp(1.5rem,4vw,2.5rem)] py-[clamp(1.75rem,4vh,2.75rem)]">
         {/* Brand block — hero signal */}
         <header className="pt-2 text-center">
           <motion.p
@@ -41,7 +41,7 @@ export default function WelcomePage() {
           </motion.h1>
 
           <motion.p
-            className="mx-auto mt-6 max-w-[22rem] font-body text-[1.05rem] font-medium leading-relaxed tracking-[-0.01em] text-[#f4efe4]/62"
+            className="mx-auto mt-6 max-w-88 font-body text-[1.05rem] font-medium leading-relaxed tracking-[-0.01em] text-[#f4efe4]/62"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.28, duration: 0.6 }}

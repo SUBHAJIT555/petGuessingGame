@@ -26,7 +26,7 @@ export function ScreenShell({
 
 function AmbientDecor() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" aria-hidden>
+    <div className="pointer-events-none absolute inset-0 z-1 overflow-hidden" aria-hidden>
       <motion.div
         className="orb absolute -left-16 top-[12%] h-48 w-48 rounded-full bg-leaf/20 blur-3xl"
         animate={{ x: [0, 18, 0], y: [0, -12, 0] }}
