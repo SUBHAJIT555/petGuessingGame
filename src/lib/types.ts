@@ -1,0 +1,32 @@
+export type AnimalCategory = "pets" | "farm" | "racing";
+
+export type Animal = {
+  id: string;
+  name: string;
+  category: AnimalCategory;
+  emoji: string;
+};
+
+export type GridCard = {
+  id: string;
+  animal: Animal;
+  isCorrect: boolean;
+  revealed: boolean;
+  transformed: boolean;
+};
+
+export type GameStatus = "idle" | "playing" | "gameover" | "perfect";
+
+export type GameResult = {
+  category: AnimalCategory;
+  correctPicks: number;
+  score: number;
+  status: "gameover" | "perfect";
+  totalCorrectPossible: number;
+};
+
+export const POINTS_PER_CORRECT = 4;
+export const CORRECT_CARDS = 20;
+export const DECOY_CARDS = 5;
+export const GRID_SIZE = 25;
+export const MAX_SCORE = 100;
