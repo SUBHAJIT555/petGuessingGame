@@ -9,8 +9,7 @@ Interactive touchscreen game for a **49" vertical event display**.
 | `/` | Welcome |
 | `/category` | Category selection (Pets / Farm / Racing) |
 | `/game` | 5×5 discovery grid |
-| `/results` | Score summary |
-| `/selfie` | Photo Zone pose screen (cameraman takes the shot) |
+| `/results` | Score + photo zone (combined) |
 | `/gallery` | Attract / idle screen |
 
 ## Stack
