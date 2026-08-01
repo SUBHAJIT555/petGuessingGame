@@ -70,27 +70,33 @@ export default function CategoryPage() {
           />
         </motion.div>
 
+        <motion.p
+          className="category-hint"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.55, duration: 0.6 }}
+        >
+          Select one to play
+        </motion.p>
+
         <motion.div
           className="category-cards"
-          initial={{ opacity: 0, y: 28, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ delay: 0.22, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.28, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
           {CATEGORIES.map((cat, index) => (
             <motion.button
               key={cat.id}
               type="button"
               className="category-card-btn"
-              aria-label={cat.label}
+              style={{ ["--card-i" as string]: index }}
+              aria-label={`Select ${cat.label}`}
               onClick={() => handleSelect(cat.id)}
               disabled={isTransitioning}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.28 + index * 0.08, duration: 0.45 }}
               whileTap={{
-                scale: 0.95,
-                y: 3,
-                transition: { type: "spring", stiffness: 500, damping: 28 },
+                scale: 0.97,
+                transition: { type: "spring", stiffness: 500, damping: 30 },
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
