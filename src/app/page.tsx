@@ -60,32 +60,38 @@ export default function WelcomePage() {
         {/* Spacer so animals in the art stay visible */}
         <div className="home-mid-space" aria-hidden />
 
-        {/* CTA */}
+        {/* CTA — smooth breathe to attract players */}
         <motion.button
           type="button"
           className="home-start-btn"
           onClick={() => router.push("/category")}
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={{ scale: 1.03, y: -3 }}
-          whileTap={{ scale: 0.97, y: 2 }}
+          transition={{ delay: 0.4, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          whileTap={{ scale: 0.97 }}
           aria-label="Tap to start"
         >
           <motion.span
-            className="home-start-btn-pulse"
-            animate={{ scale: [1, 1.04, 1], opacity: [0.35, 0.55, 0.35] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-            aria-hidden
-          />
-          <Image
-            src="/home/button.webp"
-            alt=""
-            width={900}
-            height={249}
-            priority
-            className="home-start-btn-img"
-          />
+            className="home-start-btn-inner"
+            animate={{
+              scale: [0.94, 1.05, 0.94],
+              y: [0, -7, 0],
+            }}
+            transition={{
+              duration: 2.6,
+              repeat: Infinity,
+              ease: [0.45, 0, 0.55, 1],
+            }}
+          >
+            <Image
+              src="/home/button.webp"
+              alt=""
+              width={900}
+              height={249}
+              priority
+              className="home-start-btn-img"
+            />
+          </motion.span>
         </motion.button>
       </div>
     </main>

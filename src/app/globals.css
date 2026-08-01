@@ -320,7 +320,7 @@ body {
 .home-start-btn {
   position: relative;
   flex-shrink: 0;
-  width: min(88%, 28rem);
+  width: min(64%, 19rem);
   border: none;
   background: transparent;
   padding: 0;
@@ -328,18 +328,13 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.home-start-btn-pulse {
-  position: absolute;
-  inset: 8% 4%;
-  border-radius: 1.25rem;
-  background: rgba(70, 140, 255, 0.45);
-  filter: blur(18px);
-  z-index: 0;
+.home-start-btn-inner {
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
 }
 
 .home-start-btn-img {
-  position: relative;
-  z-index: 1;
   width: 100%;
   height: auto;
   display: block;
