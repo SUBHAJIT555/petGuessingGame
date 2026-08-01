@@ -8,6 +8,7 @@ import { ConfettiOverlay } from "@/components/ConfettiOverlay";
 import { ScreenShell } from "@/components/ScreenShell";
 import { TouchButton } from "@/components/TouchButton";
 import { useGame } from "@/context/GameContext";
+import { usePageTransition } from "@/context/PageTransitionContext";
 import { CATEGORY_META } from "@/lib/animals";
 import { fadeUp, springPop, stagger } from "@/lib/motion";
 
@@ -15,6 +16,7 @@ type Phase = "summary" | "thanks";
 
 export default function ResultsPage() {
   const router = useRouter();
+  const { navigate } = usePageTransition();
   const { result, resetGame } = useGame();
   const [phase, setPhase] = useState<Phase>("summary");
 
@@ -56,7 +58,7 @@ export default function ResultsPage() {
               className="mt-10 w-full"
               onClick={() => {
                 resetGame();
-                router.push("/");
+                void navigate("/");
               }}
             >
               Next Player
@@ -142,7 +144,7 @@ export default function ResultsPage() {
                 className="w-full"
                 onClick={() => {
                   resetGame();
-                  router.push("/category");
+                  void navigate("/category");
                 }}
               >
                 Play Again

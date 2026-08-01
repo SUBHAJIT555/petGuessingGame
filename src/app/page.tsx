@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { useRouter } from "next/navigation";
 import { FallingFoliage } from "@/components/FallingFoliage";
+import { usePageTransition } from "@/context/PageTransitionContext";
 
 export default function WelcomePage() {
-  const router = useRouter();
+  const { navigate, isTransitioning } = usePageTransition();
 
   return (
     <main className="home-stage">
@@ -64,7 +64,8 @@ export default function WelcomePage() {
         <motion.button
           type="button"
           className="home-start-btn"
-          onClick={() => router.push("/category")}
+          onClick={() => navigate("/category")}
+          disabled={isTransitioning}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}

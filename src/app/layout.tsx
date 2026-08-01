@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import { GameProvider } from "@/context/GameContext";
+import { PageTransitionProvider } from "@/context/PageTransitionContext";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({
@@ -37,7 +38,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${body.variable} h-full`}>
       <body className="h-full overflow-hidden antialiased">
-        <GameProvider>{children}</GameProvider>
+        <GameProvider>
+          <PageTransitionProvider>{children}</PageTransitionProvider>
+        </GameProvider>
       </body>
     </html>
   );

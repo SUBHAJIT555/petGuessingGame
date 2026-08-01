@@ -1,7 +1,8 @@
 "use client";
 
-import { PageTransition } from "@/components/PageTransition";
+import type { ReactNode } from "react";
 
-export default function Template({ children }: { children: React.ReactNode }) {
-  return <PageTransition>{children}</PageTransition>;
+/** Route content wrapper — blinds curtain owns page transitions. */
+export default function Template({ children }: { children: ReactNode }) {
+  return <>{children}</>;
 }

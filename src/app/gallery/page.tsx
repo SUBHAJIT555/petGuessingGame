@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "motion/react";
-import { useRouter } from "next/navigation";
 import { ScreenShell } from "@/components/ScreenShell";
 import { TouchButton } from "@/components/TouchButton";
+import { usePageTransition } from "@/context/PageTransitionContext";
 import { fadeUp, springPop, stagger } from "@/lib/motion";
 
 const HIGHLIGHTS = [
@@ -13,7 +13,7 @@ const HIGHLIGHTS = [
 ];
 
 export default function AttractPage() {
-  const router = useRouter();
+  const { navigate, isTransitioning } = usePageTransition();
 
   return (
     <ScreenShell className="items-center justify-between text-center">
@@ -105,7 +105,11 @@ export default function AttractPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
-        <TouchButton className="w-full" onClick={() => router.push("/category")}>
+        <TouchButton
+          className="w-full"
+          disabled={isTransitioning}
+          onClick={() => navigate("/category")}
+        >
           Tap to Play
         </TouchButton>
       </motion.div>

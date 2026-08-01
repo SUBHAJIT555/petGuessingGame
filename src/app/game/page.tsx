@@ -8,9 +8,11 @@ import { ConfettiOverlay } from "@/components/ConfettiOverlay";
 import { ScoreBoard } from "@/components/ScoreBoard";
 import { ScreenShell } from "@/components/ScreenShell";
 import { useGame } from "@/context/GameContext";
+import { usePageTransition } from "@/context/PageTransitionContext";
 
 export default function GamePage() {
   const router = useRouter();
+  const { navigate } = usePageTransition();
   const { category, cards, score, correctPicks, lives, maxLives, status, revealCard } =
     useGame();
 
@@ -20,10 +22,12 @@ export default function GamePage() {
 
   useEffect(() => {
     if (status === "gameover" || status === "perfect") {
-      const timer = setTimeout(() => router.push("/results"), 1700);
+      const timer = setTimeout(() => {
+        void navigate("/results");
+      }, 1700);
       return () => clearTimeout(timer);
     }
-  }, [status, router]);
+  }, [status, navigate]);
 
   if (!category) return null;
 
