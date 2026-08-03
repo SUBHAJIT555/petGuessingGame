@@ -5,6 +5,8 @@ export type Animal = {
   name: string;
   category: AnimalCategory;
   emoji: string;
+  /** Portrait under /public/game/animals when available */
+  image?: string;
 };
 
 export type GridCard = {

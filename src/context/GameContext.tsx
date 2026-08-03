@@ -24,6 +24,12 @@ const CATEGORY_EMOJI: Record<AnimalCategory, string> = {
   racing: "🐎",
 };
 
+const CATEGORY_IMAGE: Record<AnimalCategory, string> = {
+  pets: "/game/animals/dog.webp",
+  farm: "/game/animals/cow.webp",
+  racing: "/game/animals/horse.webp",
+};
+
 const CATEGORY_LABEL_ANIMAL: Record<AnimalCategory, string> = {
   pets: "Pet Friend",
   farm: "Farm Friend",
@@ -110,6 +116,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
                   ...c.animal,
                   name: CATEGORY_LABEL_ANIMAL[category],
                   emoji: CATEGORY_EMOJI[category],
+                  image: CATEGORY_IMAGE[category],
                   category,
                 },
               };

@@ -36,8 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} h-full`}>
-      <body className="h-full overflow-hidden antialiased">
+    <html lang="en" className={`${display.variable} ${body.variable} h-full`} suppressHydrationWarning>
+      <body className="h-full overflow-hidden antialiased" suppressHydrationWarning>
         <GameProvider>
           <PageTransitionProvider>{children}</PageTransitionProvider>
         </GameProvider>
