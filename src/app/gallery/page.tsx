@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 import { ScreenShell } from "@/components/ScreenShell";
 import { TouchButton } from "@/components/TouchButton";
@@ -23,6 +24,20 @@ export default function AttractPage() {
         initial="initial"
         animate="animate"
       >
+        <motion.div
+          variants={fadeUp}
+          transition={springPop}
+          className="mb-5 flex justify-center"
+        >
+          <Image
+            src="/home/brand-logo.webp"
+            alt="IFT Animal Health"
+            width={280}
+            height={280}
+            priority
+            className="h-auto w-[clamp(4.5rem,12vw,7rem)]"
+          />
+        </motion.div>
         <motion.p variants={fadeUp} transition={springPop} className="eyebrow mb-4">
           Now Playing
         </motion.p>

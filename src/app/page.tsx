@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { FallingFoliage } from "@/components/FallingFoliage";
 import { usePageTransition } from "@/context/PageTransitionContext";
+import { playSound } from "@/lib/sounds";
 
 export default function WelcomePage() {
   const { navigate, isTransitioning } = usePageTransition();
@@ -31,8 +32,8 @@ export default function WelcomePage() {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
           <Image
-            src="/home/logo.webp"
-            alt="iFT"
+            src="/home/brand-logo.webp"
+            alt="IFT Animal Health"
             width={280}
             height={280}
             priority
@@ -64,7 +65,10 @@ export default function WelcomePage() {
         <motion.button
           type="button"
           className="home-start-btn"
-          onClick={() => navigate("/category")}
+          onClick={() => {
+            playSound("buttonClick");
+            void navigate("/category");
+          }}
           disabled={isTransitioning}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

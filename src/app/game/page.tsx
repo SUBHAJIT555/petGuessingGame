@@ -64,8 +64,8 @@ export default function GamePage() {
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
           <Image
-            src="/home/logo.webp"
-            alt="iFT"
+            src="/home/brand-logo.webp"
+            alt="IFT Animal Health"
             width={280}
             height={280}
             priority
@@ -96,36 +96,44 @@ export default function GamePage() {
           transition={{ delay: 0.18, duration: 0.4 }}
           aria-label={`${lives} of ${maxLives} lives left`}
         >
-          <span className="game-lives-label">Life Left-</span>
-          <div className="game-lives-dots">
-            {Array.from({ length: maxLives }, (_, i) => {
-              const filled = i < lives;
-              return (
-                <span
-                  key={i}
-                  className={`game-life-dot ${filled ? "is-filled" : "is-hollow"}`}
-                  aria-hidden
-                />
-              );
-            })}
-          </div>
+          {Array.from({ length: maxLives }, (_, i) => {
+            const filled = i < lives;
+            return (
+              <span
+                key={i}
+                className={`game-life-heart ${filled ? "is-filled" : "is-hollow"}`}
+                aria-hidden
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  className="game-life-heart-svg"
+                  fill="currentColor"
+                >
+                  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+                </svg>
+              </span>
+            );
+          })}
         </motion.div>
 
         <AnimatePresence>
           {(status === "gameover" || status === "perfect") && (
             <motion.div
               className="game-status-banner"
-              initial={{ opacity: 0, scale: 0.7, y: 20 }}
+              initial={{ opacity: 0, scale: 0.55, y: 28 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ type: "spring", stiffness: 320, damping: 18 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 280, damping: 16 }}
             >
               <div
                 className={`game-status-pill ${
                   status === "perfect" ? "is-perfect" : "is-over"
                 }`}
               >
-                {status === "perfect" ? "PERFECT!" : "GAME OVER"}
+                <span className="game-status-text">
+                  {status === "perfect" ? "PERFECT!" : "GAME OVER"}
+                </span>
               </div>
             </motion.div>
           )}

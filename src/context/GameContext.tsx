@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { buildGameGrid, calcScore } from "@/lib/game";
+import { playSound } from "@/lib/sounds";
 import {
   CORRECT_CARDS,
   MAX_LIVES,
@@ -80,6 +81,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
       if (!target || target.revealed) return;
 
       if (!target.isCorrect) {
+        playSound("blockFlip");
+        playSound("wrongGuess", { delayMs: 120 });
+
         const nextLives = lives - 1;
         setCards((prev) =>
           prev.map((c) => (c.id === cardId ? { ...c, revealed: true } : c)),
@@ -87,6 +91,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         setLives(nextLives);
 
         if (nextLives <= 0) {
+          playSound("gameOver", { delayMs: 280 });
           setStatus("gameover");
           setResult({
             category,
@@ -102,7 +107,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
       const nextPicks = correctPicks + 1;
       const nextScore = calcScore(nextPicks);
 
+      playSound("blockFlip");
+
       if (nextPicks >= CORRECT_CARDS) {
+        playSound("victory", { delayMs: 180 });
         setCards((prev) =>
           prev.map((c) => {
             if (c.id === cardId) return { ...c, revealed: true };

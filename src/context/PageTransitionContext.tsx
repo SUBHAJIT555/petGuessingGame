@@ -12,6 +12,7 @@ import {
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createBlindsCurtain, prefersReducedMotion, preloadBlindsLogo } from "@/lib/blinds";
+import { preloadSounds } from "@/lib/sounds";
 
 type NavigateOptions = {
   replace?: boolean;
@@ -45,6 +46,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     preloadBlindsLogo();
+    preloadSounds();
   }, []);
 
   useEffect(() => {

@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, type HTMLMotionProps } from "motion/react";
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
+import { playSound } from "@/lib/sounds";
 
 type Variant = "primary" | "secondary" | "accent" | "danger";
 
@@ -22,8 +23,15 @@ export function TouchButton({
   variant = "primary",
   className = "",
   disabled,
+  onClick,
   ...props
 }: TouchButtonProps) {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (disabled) return;
+    playSound("buttonClick");
+    onClick?.(event);
+  };
+
   return (
     <motion.button
       type="button"
@@ -34,6 +42,7 @@ export function TouchButton({
       className={`touch-btn ${variantClass[variant]} ${className} ${
         disabled ? "cursor-not-allowed opacity-50" : ""
       }`}
+      onClick={handleClick}
       {...props}
     >
       {children}

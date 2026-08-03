@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { useGame } from "@/context/GameContext";
 import { usePageTransition } from "@/context/PageTransitionContext";
+import { playSound } from "@/lib/sounds";
 import type { AnimalCategory } from "@/lib/types";
 
 const CATEGORIES: {
@@ -22,6 +23,7 @@ export default function CategoryPage() {
 
   const handleSelect = (category: AnimalCategory) => {
     if (isTransitioning) return;
+    playSound("buttonClick");
     selectCategory(category);
     void navigate("/game");
   };
@@ -45,8 +47,8 @@ export default function CategoryPage() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <Image
-            src="/home/logo.webp"
-            alt="iFT"
+            src="/home/brand-logo.webp"
+            alt="IFT Animal Health"
             width={280}
             height={280}
             priority
@@ -113,7 +115,10 @@ export default function CategoryPage() {
         <motion.button
           type="button"
           className="category-back-btn"
-          onClick={() => navigate("/")}
+          onClick={() => {
+            playSound("buttonClick");
+            void navigate("/");
+          }}
           disabled={isTransitioning}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

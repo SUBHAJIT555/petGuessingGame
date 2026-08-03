@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
-import { AnimatedScore } from "@/components/AnimatedScore";
 import { ConfettiOverlay } from "@/components/ConfettiOverlay";
-import { ScreenShell } from "@/components/ScreenShell";
 import { TouchButton } from "@/components/TouchButton";
 import { useGame } from "@/context/GameContext";
 import { usePageTransition } from "@/context/PageTransitionContext";
-import { CATEGORY_META } from "@/lib/animals";
-import { fadeUp, springPop, stagger } from "@/lib/motion";
+import { playSound } from "@/lib/sounds";
+import { CORRECT_CARDS, MAX_SCORE } from "@/lib/types";
 
 type Phase = "summary" | "thanks";
 
@@ -26,133 +25,176 @@ export default function ResultsPage() {
 
   if (!result) return null;
 
-  const meta = CATEGORY_META[result.category];
-  const isPerfect = result.status === "perfect";
+  const isPerfect = result.status === "perfect" || result.score >= MAX_SCORE;
+  const totalCorrect = result.totalCorrectPossible || CORRECT_CARDS;
 
   return (
-    <ScreenShell className="items-center justify-center text-center">
+    <main className="results-stage">
+      <Image
+        src="/results/background.webp"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="results-stage-bg"
+      />
+
       <ConfettiOverlay active={isPerfect && phase === "summary"} />
 
-      <AnimatePresence mode="wait">
-        {phase === "thanks" ? (
-          <motion.div
-            key="thanks"
-            className="flex w-full max-w-lg flex-col items-center"
-            initial={{ opacity: 0, scale: 0.92, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <motion.span
-              className="mb-4 text-8xl"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              {meta.emoji}
-            </motion.span>
-            <h1 className="display-title text-5xl sm:text-6xl">Thank You!</h1>
-            <p className="mt-4 max-w-md text-lg text-cream/70">
-              Photo moment complete. Thanks for playing!
-            </p>
-            <TouchButton
-              className="mt-10 w-full"
-              onClick={() => {
-                resetGame();
-                void navigate("/");
-              }}
-            >
-              Next Player
-            </TouchButton>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="summary"
-            className="flex w-full max-w-lg flex-col items-center"
-            variants={stagger}
-            initial="initial"
-            animate="animate"
-            exit={{ opacity: 0, y: -16 }}
-          >
-            <motion.p variants={fadeUp} transition={springPop} className="eyebrow mb-3">
-              {isPerfect ? "Perfect Run" : "Result & Photo"}
-            </motion.p>
-            <motion.h1
-              variants={fadeUp}
-              transition={springPop}
-              className="display-title text-4xl sm:text-5xl"
-            >
-              {isPerfect ? "Congratulations!" : "Good Try!"}
-            </motion.h1>
-            <motion.p
-              variants={fadeUp}
-              transition={springPop}
-              className="mt-3 max-w-md text-lg text-cream/65"
-            >
-              Smile for the camera — our photographer will take your shot
-            </motion.p>
+      <div className="results-stage-ui">
+        <motion.div
+          className="results-logo-wrap"
+          initial={{ opacity: 0, y: -12, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.45 }}
+        >
+          <Image
+            src="/home/brand-logo.webp"
+            alt="IFT Animal Health"
+            width={280}
+            height={280}
+            priority
+            className="results-logo"
+          />
+        </motion.div>
 
+        <AnimatePresence mode="wait">
+          {phase === "thanks" ? (
             <motion.div
-              variants={fadeUp}
-              transition={springPop}
-              className="glass-panel mt-8 w-full space-y-3 p-5 text-left"
+              key="thanks"
+              className="results-thanks"
+              initial={{ opacity: 0, scale: 0.92, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="stat-row">
-                <span className="text-cream/65">Category</span>
-                <span className="flex items-center gap-2 font-display text-xl font-bold">
-                  <span>{meta.emoji}</span>
-                  {meta.label}
-                </span>
-              </div>
-              <div className="stat-row">
-                <span className="text-cream/65">Correct Picks</span>
-                <span className="font-display text-2xl font-bold text-sun">
-                  {result.correctPicks}
-                  <span className="text-cream/45">
-                    {" "}
-                    / {result.totalCorrectPossible}
-                  </span>
-                </span>
-              </div>
-              <div className="score-pill mt-1 px-6 py-5 text-center">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-60">
-                  Final Score
-                </p>
-                <AnimatedScore
-                  value={result.score}
-                  className="font-display text-5xl font-extrabold leading-none sm:text-6xl"
-                />
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={fadeUp}
-              transition={springPop}
-              className="mt-8 flex w-full flex-col gap-3"
-            >
-              <p className="text-sm text-cream/40">
-                Staff: tap after the photo is taken
+              <h1 className="results-thanks-title">Thank You!</h1>
+              <p className="results-thanks-copy">
+                Photo moment complete. Thanks for playing!
               </p>
               <TouchButton
-                variant="accent"
-                className="w-full"
-                onClick={() => setPhase("thanks")}
-              >
-                Photo Taken — Continue
-              </TouchButton>
-              <TouchButton
-                variant="secondary"
-                className="w-full"
+                className="results-thanks-btn"
                 onClick={() => {
                   resetGame();
-                  void navigate("/category");
+                  void navigate("/");
                 }}
               >
-                Play Again
+                Next Player
               </TouchButton>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </ScreenShell>
+          ) : (
+            <motion.div
+              key="summary"
+              className="results-summary"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {isPerfect && (
+                <motion.div
+                  className="results-title-wrap"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.05, duration: 0.5 }}
+                >
+                  <Image
+                    src="/results/title-perfect.webp"
+                    alt="Congratulations!"
+                    width={1024}
+                    height={329}
+                    priority
+                    className="results-title"
+                  />
+                </motion.div>
+              )}
+
+              <motion.div
+                className={`results-card ${isPerfect ? "is-perfect" : "is-try"}`}
+                initial={{ opacity: 0, y: 18, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 0.12, duration: 0.5 }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={
+                    isPerfect
+                      ? "/results/score-perfect.webp"
+                      : "/results/score-try.webp"
+                  }
+                  alt=""
+                  className="results-card-img"
+                  draggable={false}
+                />
+
+                {isPerfect ? (
+                  <div className="results-overlay results-perfect-picks">
+                    {result.correctPicks} / {totalCorrect}
+                  </div>
+                ) : (
+                  <>
+                    <div className="results-overlay results-try-score">
+                      <span className="results-try-score-main">
+                        {result.score}
+                      </span>
+                      <span className="results-try-score-den">
+                        / {MAX_SCORE}
+                      </span>
+                    </div>
+                    <div className="results-overlay results-try-picks">
+                      <span className="results-try-picks-main">
+                        {result.correctPicks}
+                      </span>
+                      <span className="results-try-picks-den">
+                        / {totalCorrect}
+                      </span>
+                    </div>
+                  </>
+                )}
+              </motion.div>
+
+              <motion.button
+                type="button"
+                className="results-photo-btn"
+                onClick={() => {
+                  playSound("buttonClick");
+                  setPhase("thanks");
+                }}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.28, duration: 0.45 }}
+                whileTap={{ scale: 0.97 }}
+                aria-label="Photo Taken — Continue"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/results/btn-photo-continue.webp"
+                  alt=""
+                  className="results-photo-img"
+                  draggable={false}
+                />
+              </motion.button>
+
+              {isPerfect && (
+                <motion.div
+                  className="results-footer-wrap"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.36, duration: 0.45 }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/results/footer-perfect.webp"
+                    alt=""
+                    className="results-footer-img"
+                    draggable={false}
+                  />
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </main>
   );
 }
