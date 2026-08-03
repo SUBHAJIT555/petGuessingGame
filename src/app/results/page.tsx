@@ -5,7 +5,6 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { ConfettiOverlay } from "@/components/ConfettiOverlay";
-import { TouchButton } from "@/components/TouchButton";
 import { useGame } from "@/context/GameContext";
 import { usePageTransition } from "@/context/PageTransitionContext";
 import { playSound } from "@/lib/sounds";
@@ -68,19 +67,56 @@ export default function ResultsPage() {
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              <h1 className="results-thanks-title">Thank You!</h1>
-              <p className="results-thanks-copy">
-                Photo moment complete. Thanks for playing!
-              </p>
-              <TouchButton
+              <motion.div
+                className="results-thanks-plaque-wrap"
+                initial={{ opacity: 0, y: 18, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 0.08, duration: 0.5 }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/results/thanks-plaque.webp"
+                  alt="Thank You! Thank you for taking part in the Animal Discovery Challenge. We hope you enjoyed exploring, discovering, and learning with us. Have a wonderful day, and we look forward to seeing you again!"
+                  className="results-thanks-plaque"
+                  draggable={false}
+                />
+              </motion.div>
+
+              <motion.button
+                type="button"
                 className="results-thanks-btn"
                 onClick={() => {
+                  playSound("buttonClick");
                   resetGame();
                   void navigate("/");
                 }}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.22, duration: 0.45 }}
+                whileTap={{ scale: 0.97 }}
+                aria-label="Back to Home"
               >
-                Next Player
-              </TouchButton>
+                <motion.span
+                  className="results-thanks-btn-inner"
+                  animate={{
+                    scale: [0.94, 1.05, 0.94],
+                    y: [0, -7, 0],
+                  }}
+                  transition={{
+                    duration: 2.6,
+                    repeat: Infinity,
+                    ease: [0.45, 0, 0.55, 1],
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/results/btn-back-home.webp"
+                    alt=""
+                    className="results-thanks-btn-img"
+                    draggable={false}
+                  />
+                </motion.span>
+              </motion.button>
             </motion.div>
           ) : (
             <motion.div

@@ -1317,32 +1317,63 @@ body {
 }
 
 .results-thanks {
-  flex: 1;
+  flex: 1 1 auto;
   display: flex;
-  width: min(92%, 26rem);
+  width: 100%;
+  min-height: 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  gap: clamp(1rem, 2.8vh, 1.75rem);
 }
 
-.results-thanks-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 8vw, 3.5rem);
-  font-weight: 800;
-  color: #fff8e0;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+.results-thanks-plaque-wrap {
+  flex: 0 1 auto;
+  width: min(88%, 24rem);
+  max-height: min(62dvh, 34rem);
 }
 
-.results-thanks-copy {
-  margin-top: 0.85rem;
-  font-size: clamp(1rem, 3.2vw, 1.2rem);
-  color: rgba(255, 248, 224, 0.78);
+.results-thanks-plaque {
+  width: 100%;
+  height: auto;
+  max-height: inherit;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.4));
+  pointer-events: none;
+  user-select: none;
 }
 
 .results-thanks-btn {
-  margin-top: 1.75rem;
+  flex-shrink: 0;
+  width: min(52%, 15rem);
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.results-thanks-btn:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.75);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+.results-thanks-btn-inner {
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.results-thanks-btn-img {
   width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+  pointer-events: none;
+  user-select: none;
 }
 
 
