@@ -8,7 +8,11 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { buildGameGrid, calcScore } from "@/lib/game";
+import {
+  buildGameGrid,
+  calcScore,
+  transformDecoysToCategory,
+} from "@/lib/game";
 import { playSound } from "@/lib/sounds";
 import {
   CORRECT_CARDS,
@@ -18,24 +22,6 @@ import {
   type GameStatus,
   type GridCard,
 } from "@/lib/types";
-
-const CATEGORY_EMOJI: Record<AnimalCategory, string> = {
-  pets: "🐕",
-  farm: "🐄",
-  racing: "🐎",
-};
-
-const CATEGORY_IMAGE: Record<AnimalCategory, string> = {
-  pets: "/game/animals/dog.webp",
-  farm: "/game/animals/cow.webp",
-  racing: "/game/animals/horse.webp",
-};
-
-const CATEGORY_LABEL_ANIMAL: Record<AnimalCategory, string> = {
-  pets: "Pet Friend",
-  farm: "Farm Friend",
-  racing: "Racing Star",
-};
 
 type GameContextValue = {
   category: AnimalCategory | null;
@@ -71,6 +57,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setLives(MAX_LIVES);
     setStatus("playing");
     setResult(null);
+  }, []);
+
+  const finishPerfect = useCallback((activeCategory: AnimalCategory) => {
+    setCorrectPicks(CORRECT_CARDS);
+    setScore(100);
+    setStatus("perfect");
+    setResult({
+      category: activeCategory,
+      correctPicks: CORRECT_CARDS,
+      score: 100,
+      status: "perfect",
+      totalCorrectPossible: CORRECT_CARDS,
+    });
   }, []);
 
   const revealCard = useCallback(
@@ -112,36 +111,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
       if (nextPicks >= CORRECT_CARDS) {
         playSound("victory", { delayMs: 180 });
         setCards((prev) =>
-          prev.map((c) => {
-            if (c.id === cardId) return { ...c, revealed: true };
-            if (!c.isCorrect && !c.revealed) {
-              return {
-                ...c,
-                revealed: true,
-                transformed: true,
-                isCorrect: true,
-                animal: {
-                  ...c.animal,
-                  name: CATEGORY_LABEL_ANIMAL[category],
-                  emoji: CATEGORY_EMOJI[category],
-                  image: CATEGORY_IMAGE[category],
-                  category,
-                },
-              };
-            }
-            return c;
-          }),
+          transformDecoysToCategory(prev, category, cardId),
         );
-        setCorrectPicks(CORRECT_CARDS);
-        setScore(100);
-        setStatus("perfect");
-        setResult({
-          category,
-          correctPicks: CORRECT_CARDS,
-          score: 100,
-          status: "perfect",
-          totalCorrectPossible: CORRECT_CARDS,
-        });
+        finishPerfect(category);
         return;
       }
 
@@ -151,7 +123,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setCorrectPicks(nextPicks);
       setScore(nextScore);
     },
-    [cards, category, correctPicks, lives, score, status],
+    [cards, category, correctPicks, finishPerfect, lives, score, status],
   );
 
   const resetGame = useCallback(() => {

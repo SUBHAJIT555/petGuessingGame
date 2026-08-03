@@ -33,7 +33,7 @@ export default function GamePage() {
     if (status === "gameover" || status === "perfect") {
       const timer = setTimeout(() => {
         void navigate("/results");
-      }, 1700);
+      }, 2400);
       return () => clearTimeout(timer);
     }
   }, [status, navigate]);

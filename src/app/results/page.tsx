@@ -127,11 +127,7 @@ export default function ResultsPage() {
                   draggable={false}
                 />
 
-                {isPerfect ? (
-                  <div className="results-overlay results-perfect-picks">
-                    {result.correctPicks} / {totalCorrect}
-                  </div>
-                ) : (
+                {!isPerfect && (
                   <>
                     <div className="results-overlay results-try-score">
                       <span className="results-try-score-main">

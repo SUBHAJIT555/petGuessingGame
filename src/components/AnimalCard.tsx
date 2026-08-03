@@ -68,6 +68,7 @@ export function AnimalCard({
           <div className="game-tile-portrait">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              key={`${card.id}-${portraitSrc}-${card.transformed}`}
               src={portraitSrc}
               alt={card.animal.name}
               className="game-tile-animal"

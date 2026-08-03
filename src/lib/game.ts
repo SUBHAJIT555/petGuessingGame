@@ -3,6 +3,7 @@ import {
   CORRECT_CARDS,
   DECOY_CARDS,
   POINTS_PER_CORRECT,
+  type Animal,
   type AnimalCategory,
   type GridCard,
 } from "./types";
@@ -52,4 +53,45 @@ export function buildGameGrid(category: AnimalCategory): GridCard[] {
 
 export function calcScore(correctPicks: number): number {
   return correctPicks * POINTS_PER_CORRECT;
+}
+
+function isDecoyCard(card: GridCard): boolean {
+  return card.id.startsWith("decoy-") || (!card.isCorrect && !card.transformed);
+}
+
+/** On perfect win: flip every decoy into a selected-category animal. */
+export function transformDecoysToCategory(
+  cards: GridCard[],
+  category: AnimalCategory,
+  lastRevealedId?: string,
+): GridCard[] {
+  const pool = getAnimalsByCategory(category);
+  let decoyIndex = 0;
+
+  return cards.map((card) => {
+    if (card.id === lastRevealedId) {
+      return { ...card, revealed: true };
+    }
+
+    if (!isDecoyCard(card)) {
+      return card.revealed ? card : { ...card, revealed: true };
+    }
+
+    const replacement: Animal = pool[decoyIndex % pool.length];
+    decoyIndex += 1;
+
+    return {
+      ...card,
+      revealed: true,
+      transformed: true,
+      isCorrect: true,
+      animal: {
+        id: `transformed-${replacement.id}-${card.id}`,
+        name: replacement.name,
+        category,
+        emoji: replacement.emoji,
+        image: replacement.image,
+      },
+    };
+  });
 }
