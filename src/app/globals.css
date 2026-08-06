@@ -767,8 +767,8 @@ body {
 
 .game-title-wrap {
   flex-shrink: 0;
-  width: min(72%, 24rem);
-  margin-top: clamp(-0.4rem, -0.7vh, -0.2rem);
+  width: min(86%, 30rem);
+  margin-top: clamp(0.15rem, 0.6vh, 0.45rem);
 }
 
 .game-title {
@@ -784,16 +784,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(0.45rem, 1.5vw, 0.75rem);
-  margin: clamp(0.05rem, 0.35vh, 0.3rem) 0 clamp(0.1rem, 0.45vh, 0.35rem);
+  gap: clamp(0.55rem, 1.8vw, 0.95rem);
+  margin: clamp(0.35rem, 1vh, 0.7rem) 0 clamp(0.35rem, 1vh, 0.65rem);
   pointer-events: none;
   user-select: none;
 }
 
 .game-life-heart {
   display: flex;
-  width: clamp(1.85rem, 5vw, 2.55rem);
-  height: clamp(1.85rem, 5vw, 2.55rem);
+  width: clamp(2.15rem, 5.8vw, 3rem);
+  height: clamp(2.15rem, 5.8vw, 3rem);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
   transform-origin: center center;
 }
