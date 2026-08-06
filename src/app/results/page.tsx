@@ -75,7 +75,7 @@ export default function ResultsPage() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/results/thanks-plaque.webp"
+                  src="/results/thankyou.png"
                   alt="Thank You! Thank you for taking part in the Animal Discovery Challenge. We hope you enjoyed exploring, discovering, and learning with us. Have a wonderful day, and we look forward to seeing you again!"
                   className="results-thanks-plaque"
                   draggable={false}
@@ -155,8 +155,8 @@ export default function ResultsPage() {
                 <img
                   src={
                     isPerfect
-                      ? "/results/score-perfect.webp"
-                      : "/results/score-try.webp"
+                      ? "/results/fullscore.png"
+                      : "/results/score.png"
                   }
                   alt=""
                   className="results-card-img"

@@ -12,9 +12,9 @@ const CATEGORIES: {
   src: string;
   label: string;
 }[] = [
-  { id: "pets", src: "/category/card-pets.webp", label: "Pet Animals" },
-  { id: "farm", src: "/category/card-farm.webp", label: "Farm Animals" },
-  { id: "racing", src: "/category/card-racing.webp", label: "Racing Animals" },
+  { id: "pets", src: "/category/petanimal.png", label: "Pet Animals" },
+  { id: "farm", src: "/category/farmanimal.png", label: "Farm Animals" },
+  { id: "racing", src: "/category/racinganimal.png", label: "Racing Animals" },
 ];
 
 export default function CategoryPage() {

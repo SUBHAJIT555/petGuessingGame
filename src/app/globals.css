@@ -316,7 +316,7 @@ body {
   position: relative;
   flex-shrink: 0;
   width: min(64%, 20rem);
-  margin-top: clamp(0.55rem, 1.5vh, 1.1rem);
+  margin-top: clamp(1.35rem, 3.5vh, 2.5rem);
   border: none;
   background: transparent;
   padding: 0;
@@ -656,7 +656,7 @@ body {
   width: auto;
   height: min(60dvh, 100%);
   max-height: 100%;
-  aspect-ratio: 293 / 838;
+  aspect-ratio: 1457 / 3968;
   max-width: calc((100% - 2.4rem) / 3);
   border: none;
   background: transparent;
@@ -1298,10 +1298,10 @@ body {
 
 /* Try card: fill empty score/picks slots */
 .results-try-score {
-  top: 47.5%;
+  top: 49%;
   left: 12%;
   width: 76%;
-  height: 10%;
+  height: 9%;
   gap: 0.2rem;
 }
 
@@ -1321,10 +1321,10 @@ body {
 }
 
 .results-try-picks {
-  top: 69%;
+  top: 70.5%;
   left: 16%;
   width: 68%;
-  height: 9%;
+  height: 8%;
   gap: 0.15rem;
 }
 

@@ -13,7 +13,7 @@ export default function WelcomePage() {
     <main className="home-stage">
       {/* Full-bleed jungle scene — animals + environment */}
       <Image
-        src="/home/background.webp"
+        src="/home/background-v2.webp"
         alt=""
         fill
         priority
