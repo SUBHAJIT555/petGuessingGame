@@ -10,6 +10,8 @@ import { ScoreBoard } from "@/components/ScoreBoard";
 import { useGame } from "@/context/GameContext";
 import { usePageTransition } from "@/context/PageTransitionContext";
 import { CATEGORY_META } from "@/lib/animals";
+import { MAX_LIVES } from "@/lib/types";
+import { playSound } from "@/lib/sounds";
 
 export default function GamePage() {
   const router = useRouter();
@@ -22,14 +24,53 @@ export default function GamePage() {
     lives,
     maxLives,
     status,
+    hintIds,
+    revealHint,
+    finishHinting,
     revealCard,
+    dismissIntro,
   } = useGame();
   const prevLivesRef = useRef(lives);
   const [losingIndex, setLosingIndex] = useState<number | null>(null);
+  const hintRunRef = useRef(false);
 
   useEffect(() => {
     if (!category) router.replace("/category");
   }, [category, router]);
+
+  // After page opens: show full grid, then flip 2 example tiles one by one
+  useEffect(() => {
+    if (status !== "hinting" || hintIds.length === 0) return;
+    if (hintRunRef.current) return;
+    hintRunRef.current = true;
+
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const START_DELAY_MS = 900;
+    const BETWEEN_FLIP_MS = 520;
+    const AFTER_LAST_MS = 380;
+
+    hintIds.forEach((id, i) => {
+      timers.push(
+        setTimeout(() => {
+          revealHint(id);
+        }, START_DELAY_MS + i * BETWEEN_FLIP_MS),
+      );
+    });
+
+    timers.push(
+      setTimeout(
+        () => {
+          finishHinting();
+        },
+        START_DELAY_MS + hintIds.length * BETWEEN_FLIP_MS + AFTER_LAST_MS,
+      ),
+    );
+
+    return () => {
+      timers.forEach(clearTimeout);
+      hintRunRef.current = false;
+    };
+  }, [status, hintIds, revealHint, finishHinting]);
 
   useEffect(() => {
     if (status === "gameover" || status === "perfect") {
@@ -132,6 +173,47 @@ export default function GamePage() {
             );
           })}
         </motion.div>
+
+        <AnimatePresence>
+          {status === "intro" && (
+            <motion.div
+              className="game-intro"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <motion.div
+                className="game-intro-card"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="game-intro-title"
+                initial={{ opacity: 0, y: 28, scale: 0.92 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 12, scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+              >
+                <p className="game-intro-eyebrow">Look at the open blocks</p>
+                <h2 id="game-intro-title" className="game-intro-title">
+                  These are the correct blocks
+                </h2>
+                <p className="game-intro-copy">
+                  Find all {meta.label} within {MAX_LIVES} lives to win!
+                </p>
+                <button
+                  type="button"
+                  className="game-intro-btn"
+                  onClick={() => {
+                    playSound("buttonClick");
+                    dismissIntro();
+                  }}
+                >
+                  Let&apos;s Play
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <AnimatePresence>
           {(status === "gameover" || status === "perfect") && (

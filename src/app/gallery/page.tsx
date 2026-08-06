@@ -8,7 +8,7 @@ import { usePageTransition } from "@/context/PageTransitionContext";
 import { fadeUp, springPop, stagger } from "@/lib/motion";
 
 const HIGHLIGHTS = [
-  { emoji: "🐾", label: "Find 20 animals" },
+  { emoji: "🐾", label: "Find 22 animals" },
   { emoji: "⚡", label: "30–60 sec play" },
   { emoji: "📷", label: "Photo moment" },
 ];

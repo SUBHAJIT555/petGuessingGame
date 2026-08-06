@@ -3,6 +3,7 @@ import {
   CORRECT_CARDS,
   DECOY_CARDS,
   POINTS_PER_CORRECT,
+  START_HINT_CARDS,
   type Animal,
   type AnimalCategory,
   type GridCard,
@@ -51,6 +52,16 @@ export function buildGameGrid(category: AnimalCategory): GridCard[] {
   return shuffle(cards);
 }
 
+/** Pick correct tile ids to auto-reveal as examples (still face-down until flipped). */
+export function pickStartingHintIds(
+  cards: GridCard[],
+  count: number = START_HINT_CARDS,
+): string[] {
+  const correctIds = cards.filter((c) => c.isCorrect).map((c) => c.id);
+  return shuffle(correctIds).slice(0, count);
+}
+
+/** Each correct pick is worth POINTS_PER_CORRECT (perfect = full grid × points). */
 export function calcScore(correctPicks: number): number {
   return correctPicks * POINTS_PER_CORRECT;
 }
