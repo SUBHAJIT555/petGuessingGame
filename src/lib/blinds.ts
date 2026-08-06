@@ -2,7 +2,7 @@ import { animate, stagger } from "motion";
 
 const EASE_COVER: [number, number, number, number] = [0.65, 0, 0.35, 1];
 const EASE_REVEAL: [number, number, number, number] = [0.22, 1, 0.36, 1];
-const FILL = "var(--blinds-fill, #feec99)";
+const FILL = "var(--blinds-fill, #72be44)";
 const LOGO_SRC = "/home/brand-logo.webp";
 
 export type BlindsOptions = {

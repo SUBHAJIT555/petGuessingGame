@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,8 @@ export default function GamePage() {
     status,
     revealCard,
   } = useGame();
+  const prevLivesRef = useRef(lives);
+  const [losingIndex, setLosingIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (!category) router.replace("/category");
@@ -37,6 +39,17 @@ export default function GamePage() {
       return () => clearTimeout(timer);
     }
   }, [status, navigate]);
+
+  useEffect(() => {
+    const prev = prevLivesRef.current;
+    if (lives < prev) {
+      setLosingIndex(lives);
+      const timer = setTimeout(() => setLosingIndex(null), 650);
+      prevLivesRef.current = lives;
+      return () => clearTimeout(timer);
+    }
+    prevLivesRef.current = lives;
+  }, [lives]);
 
   if (!category) return null;
 
@@ -98,10 +111,13 @@ export default function GamePage() {
         >
           {Array.from({ length: maxLives }, (_, i) => {
             const filled = i < lives;
+            const losing = losingIndex === i;
             return (
               <span
                 key={i}
-                className={`game-life-heart ${filled ? "is-filled" : "is-hollow"}`}
+                className={`game-life-heart ${
+                  losing ? "is-losing" : filled ? "is-filled" : "is-hollow"
+                }`}
                 aria-hidden
               >
                 <svg

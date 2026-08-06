@@ -20,7 +20,7 @@
   --ink: #14241b;
   --glass: rgba(247, 241, 227, 0.08);
   --glass-border: rgba(242, 201, 76, 0.35);
-  --blinds-fill: #feec99;
+  --blinds-fill: #72be44;
 }
 
 @theme inline {
@@ -285,7 +285,7 @@ body {
   padding:
     clamp(1.25rem, 2.8vh, 2.25rem)
     clamp(1rem, 3.5vw, 2rem)
-    clamp(1.5rem, 3.5vh, 2.75rem);
+    clamp(4.5rem, 9vh, 7rem);
 }
 
 .home-logo-wrap {
@@ -321,7 +321,7 @@ body {
 .home-start-btn {
   position: relative;
   flex-shrink: 0;
-  width: min(64%, 19rem);
+  width: min(82%, 28rem);
   border: none;
   background: transparent;
   padding: 0;
@@ -554,7 +554,7 @@ body {
   padding:
     clamp(1rem, 2.4vh, 2rem)
     clamp(0.75rem, 2.5vw, 1.5rem)
-    clamp(1.25rem, 3vh, 2.25rem);
+    clamp(3.75rem, 7.5vh, 6rem);
 }
 
 .category-logo-wrap {
@@ -641,19 +641,21 @@ body {
   display: flex;
   width: 100%;
   min-height: 0;
-  align-items: stretch;
+  align-items: flex-start;
   justify-content: center;
   gap: clamp(0.4rem, 1.5vw, 0.8rem);
   padding:
-    clamp(0.2rem, 0.6vh, 0.5rem)
-    clamp(0.35rem, 1.5vw, 0.85rem);
+    clamp(0.15rem, 0.5vh, 0.4rem)
+    clamp(0.35rem, 1.5vw, 0.85rem)
+    0;
 }
 
 .category-card-btn {
   flex: 1 1 0;
   min-width: 0;
   max-width: 19.5rem;
-  height: 100%;
+  height: auto;
+  max-height: min(56dvh, 30rem);
   border: none;
   background: transparent;
   padding: 0;
@@ -663,7 +665,7 @@ body {
   outline: none;
   touch-action: manipulation;
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
   animation: category-card-glow 3.4s ease-in-out infinite;
   animation-delay: calc(var(--card-i, 0) * 0.75s);
 }
@@ -685,9 +687,10 @@ body {
 
 .category-card-img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: min(56dvh, 30rem);
   object-fit: contain;
-  object-position: center center;
+  object-position: center top;
   display: block;
   pointer-events: none;
   user-select: none;
@@ -695,7 +698,8 @@ body {
 
 .category-back-btn {
   flex-shrink: 0;
-  width: min(36%, 10.5rem);
+  width: min(48%, 14rem);
+  margin-top: clamp(0.35rem, 1.2vh, 0.85rem);
   border: none;
   background: transparent;
   padding: 0;
@@ -755,14 +759,14 @@ body {
 }
 
 .game-logo {
-  width: clamp(4.25rem, 11vw, 6.5rem);
+  width: clamp(3.6rem, 9.5vw, 5.5rem);
   height: auto;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
 }
 
 .game-title-wrap {
   flex-shrink: 0;
-  width: min(92%, 34rem);
+  width: min(84%, 30rem);
   margin-top: clamp(-0.35rem, -0.6vh, -0.15rem);
 }
 
@@ -787,9 +791,10 @@ body {
 
 .game-life-heart {
   display: flex;
-  width: clamp(1.55rem, 4.2vw, 2.15rem);
-  height: clamp(1.55rem, 4.2vw, 2.15rem);
+  width: clamp(1.85rem, 5vw, 2.55rem);
+  height: clamp(1.85rem, 5vw, 2.55rem);
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  transform-origin: center center;
 }
 
 .game-life-heart-svg {
@@ -823,6 +828,16 @@ body {
   stroke-width: 1.15;
 }
 
+.game-life-heart.is-losing {
+  color: #ef5350;
+  animation: game-life-lose 0.65s ease-out forwards;
+}
+
+.game-life-heart.is-losing .game-life-heart-svg {
+  fill: currentColor;
+  stroke: none;
+}
+
 @keyframes game-life-pulse {
   0% {
     transform: scale(1);
@@ -838,6 +853,34 @@ body {
     transform: scale(1);
     filter: drop-shadow(0 0 0 rgba(239, 83, 80, 0))
       drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  }
+}
+
+@keyframes game-life-lose {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 0 rgba(239, 83, 80, 0.8))
+      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  }
+  25% {
+    transform: scale(1.4) rotate(-14deg);
+    filter: drop-shadow(0 0 14px rgba(239, 83, 80, 0.95))
+      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  }
+  55% {
+    transform: scale(0.75) rotate(12deg);
+    opacity: 0.85;
+  }
+  80% {
+    transform: scale(1.08) rotate(-4deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.95;
+    color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
   }
 }
 
@@ -973,17 +1016,17 @@ body {
   min-height: 0;
   align-items: center;
   justify-content: center;
-  margin: clamp(0.15rem, 0.5vh, 0.4rem) 0;
+  margin: clamp(0.1rem, 0.35vh, 0.3rem) 0;
 }
 
 .game-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(0.35rem, 1.2vw, 0.65rem);
-  width: 100%;
-  max-width: 36rem;
-  padding: clamp(0.55rem, 1.6vw, 0.9rem);
-  border-radius: clamp(0.85rem, 2.2vw, 1.25rem);
+  gap: clamp(0.4rem, 1.4vw, 0.8rem);
+  width: min(96%, 48rem, 70dvh);
+  max-width: 100%;
+  padding: clamp(0.65rem, 1.9vw, 1.15rem);
+  border-radius: clamp(0.95rem, 2.4vw, 1.4rem);
   background: rgba(48, 28, 14, 0.72);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
@@ -1103,7 +1146,7 @@ body {
 .game-scoreboard {
   position: relative;
   flex-shrink: 0;
-  width: min(96%, 38rem);
+  width: min(98%, 46rem);
   margin-top: auto;
 }
 
@@ -1125,7 +1168,7 @@ body {
   justify-content: center;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.05rem, 3.4vw, 1.7rem);
+  font-size: clamp(1.3rem, 4.2vw, 2.1rem);
   font-variant-numeric: tabular-nums;
   color: #fff8e0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.55);
@@ -1188,7 +1231,7 @@ body {
 }
 
 .results-logo {
-  width: clamp(3.75rem, 10vw, 5.75rem);
+  width: clamp(3.25rem, 8.5vw, 5rem);
   height: auto;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
 }
@@ -1201,12 +1244,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(0.75rem, 2vh, 1.35rem);
+  gap: clamp(0.85rem, 2.2vh, 1.5rem);
 }
 
 .results-title-wrap {
   flex-shrink: 0;
-  width: min(94%, 34rem);
+  width: min(96%, 40rem);
   margin-top: clamp(-0.4rem, -0.8vh, -0.15rem);
 }
 
@@ -1219,13 +1262,13 @@ body {
 .results-card {
   position: relative;
   flex: 0 1 auto;
-  width: min(78%, 22rem);
-  max-height: min(52dvh, 28rem);
+  width: min(92%, 34rem);
+  max-height: min(66dvh, 40rem);
 }
 
 .results-card.is-try {
-  width: min(82%, 23rem);
-  max-height: min(56dvh, 30rem);
+  width: min(94%, 36rem);
+  max-height: min(70dvh, 44rem);
 }
 
 .results-card-img {
@@ -1261,7 +1304,7 @@ body {
 }
 
 .results-try-score-main {
-  font-size: clamp(2.35rem, 8.5vw, 3.35rem);
+  font-size: clamp(2.85rem, 10vw, 4.1rem);
   color: #2a5cff;
   text-shadow:
     0 1px 0 #fff,
@@ -1269,7 +1312,7 @@ body {
 }
 
 .results-try-score-den {
-  font-size: clamp(1.2rem, 4.2vw, 1.7rem);
+  font-size: clamp(1.45rem, 5vw, 2.1rem);
   color: #1a3d28;
   margin-left: 0.15rem;
   font-weight: 800;
@@ -1284,7 +1327,7 @@ body {
 }
 
 .results-try-picks-main {
-  font-size: clamp(1.75rem, 6vw, 2.45rem);
+  font-size: clamp(2.1rem, 7.2vw, 3rem);
   color: #2a5cff;
   text-shadow:
     0 1px 0 #fff,
@@ -1292,15 +1335,15 @@ body {
 }
 
 .results-try-picks-den {
-  font-size: clamp(1.15rem, 4vw, 1.55rem);
+  font-size: clamp(1.35rem, 4.8vw, 1.9rem);
   color: #1a3d28;
   font-weight: 800;
 }
 
 .results-photo-btn {
   flex-shrink: 0;
-  width: min(82%, 26rem);
-  margin-top: clamp(0.5rem, 1.5vh, 1rem);
+  width: min(90%, 32rem);
+  margin-top: clamp(0.35rem, 1.2vh, 0.85rem);
   border: none;
   background: transparent;
   padding: 0;
@@ -1346,13 +1389,13 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(1rem, 2.8vh, 1.75rem);
+  gap: clamp(1.1rem, 3vh, 2rem);
 }
 
 .results-thanks-plaque-wrap {
   flex: 0 1 auto;
-  width: min(88%, 24rem);
-  max-height: min(62dvh, 34rem);
+  width: min(96%, 38rem);
+  max-height: min(72dvh, 46rem);
 }
 
 .results-thanks-plaque {
@@ -1368,7 +1411,7 @@ body {
 
 .results-thanks-btn {
   flex-shrink: 0;
-  width: min(52%, 15rem);
+  width: min(68%, 22rem);
   border: none;
   background: transparent;
   padding: 0;
