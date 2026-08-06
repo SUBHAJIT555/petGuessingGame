@@ -315,7 +315,7 @@ body {
 .home-start-btn {
   position: relative;
   flex-shrink: 0;
-  width: min(82%, 28rem);
+  width: min(64%, 20rem);
   margin-top: clamp(0.55rem, 1.5vh, 1.1rem);
   border: none;
   background: transparent;
