@@ -58,10 +58,7 @@ export default function WelcomePage() {
           />
         </motion.div>
 
-        {/* Spacer so animals in the art stay visible */}
-        <div className="home-mid-space" aria-hidden />
-
-        {/* CTA — smooth breathe to attract players */}
+        {/* CTA — under title so animals stay visible below */}
         <motion.button
           type="button"
           className="home-start-btn"
@@ -98,6 +95,9 @@ export default function WelcomePage() {
             />
           </motion.span>
         </motion.button>
+
+        {/* Spacer so animals in the art stay visible */}
+        <div className="home-mid-space" aria-hidden />
       </div>
     </main>
   );

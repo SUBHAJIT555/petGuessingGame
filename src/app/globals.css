@@ -285,7 +285,7 @@ body {
   padding:
     clamp(1.25rem, 2.8vh, 2.25rem)
     clamp(1rem, 3.5vw, 2rem)
-    clamp(4.5rem, 9vh, 7rem);
+    clamp(1.25rem, 3vh, 2.25rem);
 }
 
 .home-logo-wrap {
@@ -312,16 +312,11 @@ body {
   filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
 }
 
-.home-mid-space {
-  flex: 1 1 auto;
-  min-height: 8rem;
-  width: 100%;
-}
-
 .home-start-btn {
   position: relative;
   flex-shrink: 0;
   width: min(82%, 28rem);
+  margin-top: clamp(0.55rem, 1.5vh, 1.1rem);
   border: none;
   background: transparent;
   padding: 0;
@@ -340,6 +335,12 @@ body {
   height: auto;
   display: block;
   filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.45));
+}
+
+.home-mid-space {
+  flex: 1 1 auto;
+  min-height: 8rem;
+  width: 100%;
 }
 
 /* Falling leaves & flowers — above art, below UI */
@@ -1023,9 +1024,9 @@ body {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(0.5rem, 1.6vw, 0.95rem);
-  /* Fill nearly full width; height follows the square tiles */
-  width: 100%;
-  max-width: min(100%, 86dvh);
+  /* Fill most of the width; slight inset so blocks aren't edge-tight */
+  width: min(94%, 80dvh);
+  max-width: 100%;
   padding: clamp(0.55rem, 1.6vw, 0.95rem);
   border-radius: clamp(0.95rem, 2.4vw, 1.4rem);
   background: rgba(48, 28, 14, 0.72);
